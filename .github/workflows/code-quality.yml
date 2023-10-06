@@ -1,0 +1,22 @@
+name: Code Quality
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-ios:
+    runs-on: macos-13
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build and test (iOS 16.4)
+        run: xcodebuild test -scheme AppIcon -destination 'platform=iOS Simulator,OS=16.4,name=iPhone 14 Pro'
+
+      - name: Build and test (iOS 17.0)
+        run: xcodebuild test -scheme AppIcon -destination 'platform=iOS Simulator,OS=17.0,name=iPhone 14 Pro'
