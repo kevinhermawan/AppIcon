@@ -11,12 +11,6 @@ public struct AppIcon {
     internal static var application: AppControllerProtocol = UIApplication.shared
     internal static var bundle: Bundle = .main
     
-    public struct Icon {
-        public let name: String
-        public let imageName: String
-        public let isDefault: Bool
-    }
-    
     public static var isSupported: Bool {
         application.supportsAlternateIcons
     }
