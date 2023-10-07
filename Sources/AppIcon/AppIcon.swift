@@ -14,6 +14,7 @@ public struct AppIcon {
     public struct Icon {
         public let name: String
         public let imageName: String
+        public let isDefault: Bool
     }
     
     public static var isSupported: Bool {
@@ -22,7 +23,7 @@ public struct AppIcon {
     
     public static var current: Icon? {
         guard let currentIconName = application.alternateIconName else {
-            return defined.first { $0.name == "Default" }
+            return defined.first { $0.isDefault }
         }
         
         return defined.first { $0.name == currentIconName }
@@ -38,7 +39,7 @@ public struct AppIcon {
         if let primaryIconDict = iconsDict["CFBundlePrimaryIcon"] as? [String: Any],
            let primaryIconFiles = primaryIconDict["CFBundleIconFiles"] as? [String],
            let primaryIconName = primaryIconFiles.first {
-            icons.append(Icon(name: "Default", imageName: primaryIconName))
+            icons.append(Icon(name: "Default", imageName: primaryIconName, isDefault: true))
         }
         
         if let alternateIconsDict = iconsDict["CFBundleAlternateIcons"] as? [String: Any] {
@@ -46,24 +47,35 @@ public struct AppIcon {
                 if let iconDict = value as? [String: Any],
                    let iconFiles = iconDict["CFBundleIconFiles"] as? [String],
                    let firstIconFile = iconFiles.first {
-                    icons.append(Icon(name: key, imageName: firstIconFile))
+                    icons.append(Icon(name: key, imageName: firstIconFile, isDefault: false))
                 }
             }
         }
         
-        return icons
+        let sortedIcons = icons
+            .sorted {
+                if $0.isDefault { return true }
+                if $1.isDefault { return false }
+                
+                return $0.name.count < $1.name.count
+            }
+            .sorted { $0.name < $1.name }
+        
+        return sortedIcons
     }
     
-    public static func set(name iconName: String?, completion: ((Error?) -> Void)? = nil) {
+    public static func set(icon: Icon?, completion: ((Error?) -> Void)? = nil) {
         guard isSupported else {
             completion?(createError("Alternate icons not supported"))
             
             return
         }
         
-        UIApplication.shared.setAlternateIconName(iconName, completionHandler: { error in
+        let iconName = icon?.isDefault ?? true ? nil : icon?.name
+        
+        UIApplication.shared.setAlternateIconName(iconName) { error in
             completion?(error)
-        })
+        }
     }
     
     private static func createError(_ message: String) -> NSError {

@@ -36,21 +36,25 @@ final class AppIconTests: XCTestCase {
     }
     
     func testSetIcon() {
-        let currentIcon = AppIcon.current
-        let iconName = "Alternate1"
-        let iconImageName = "AlternateIcon1"
+        guard let iconToSet = AppIcon.defined.first(where: { $0.name == "Alternate1" }) else {
+            return
+        }
         
-        AppIcon.set(name: iconName) { error in
+        AppIcon.set(icon: iconToSet) { error in
             XCTAssertNil(error)
-            XCTAssertEqual(currentIcon?.name, iconName)
-            XCTAssertEqual(currentIcon?.name, iconImageName)
+            XCTAssertEqual(AppIcon.current?.name, iconToSet.name)
+            XCTAssertEqual(AppIcon.current?.imageName, iconToSet.imageName)
         }
     }
     
     func testUnsupportedIconSetting() {
         AppIcon.application = MockAppController(supportsAlternateIcons: false)
         
-        AppIcon.set(name: "Alternate1") { error in
+        guard let iconToSet = AppIcon.defined.first(where: { $0.name == "Alternate1" }) else {
+            return
+        }
+        
+        AppIcon.set(icon: iconToSet) { error in
             XCTAssertNotNil(error)
             XCTAssertEqual(error?.localizedDescription, "Alternate icons not supported")
         }

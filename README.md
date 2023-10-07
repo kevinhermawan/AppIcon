@@ -36,8 +36,12 @@ if AppIcon.isSupported {
     print("Alternate icons are not supported.")
 }
 
-// Fetching the current app icon name
-print(AppIcon.current ?? "Using default app icon")
+// Fetching the current app icon details
+if let currentIcon = AppIcon.current {
+    print("Current app icon: \(currentIcon.name) - \(currentIcon.imageName)")
+} else {
+    print("Using default app icon")
+}
 
 // Fetching all defined icons
 for icon in AppIcon.defined {
@@ -45,12 +49,16 @@ for icon in AppIcon.defined {
 }
 
 // Setting an alternate app icon (for example, "Alternate1")
-AppIcon.set(name: "Alternate1") { error in
-    if let error = error {
-        print("Failed to set app icon: \(error.localizedDescription)")
-    } else {
-        print("App icon successfully set!")
+if let iconToSet = AppIcon.defined.first(where: { $0.name == "Alternate1" }) {
+    AppIcon.set(icon: iconToSet) { error in
+        if let error = error {
+            print("Failed to set app icon: \(error.localizedDescription)")
+        } else {
+            print("App icon successfully set!")
+        }
     }
+} else {
+    print("Failed to find the specified icon.")
 }
 ```
 
