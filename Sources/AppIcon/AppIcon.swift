@@ -71,7 +71,7 @@ public struct AppIcon {
             return
         }
         
-        let iconName = icon?.isDefault ?? true ? nil : icon?.name
+        let iconName = icon?.isDefault ?? true ? nil : icon?.imageName
         
         UIApplication.shared.setAlternateIconName(iconName) { error in
             completion?(error)
