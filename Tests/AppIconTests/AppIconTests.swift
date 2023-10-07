@@ -20,24 +20,30 @@ final class AppIconTests: XCTestCase {
         XCTAssertTrue(AppIcon.isSupported)
     }
     
-    func testCurrentIconName() {
-        XCTAssertEqual(AppIcon.current, "MockIconName")
+    func testCurrentIcon() {
+        let currentIcon = AppIcon.current
+        
+        XCTAssertEqual(currentIcon?.name, "Default")
+        XCTAssertEqual(currentIcon?.imageName, "DefaultIcon")
     }
     
     func testDefinedIcons() {
         let icons = AppIcon.defined
         
-        XCTAssertTrue(icons.contains { $0.name == "Default" })
-        XCTAssertTrue(icons.contains { $0.name == "Alternate1" })
-        XCTAssertTrue(icons.contains { $0.name == "Alternate2" })
+        XCTAssertTrue(icons.contains { $0.name == "Default" && $0.imageName == "DefaultIcon" })
+        XCTAssertTrue(icons.contains { $0.name == "Alternate1" && $0.imageName == "AlternateIcon1" })
+        XCTAssertTrue(icons.contains { $0.name == "Alternate2" && $0.imageName == "AlternateIcon2" })
     }
     
     func testSetIcon() {
+        let currentIcon = AppIcon.current
         let iconName = "Alternate1"
+        let iconImageName = "AlternateIcon1"
         
         AppIcon.set(name: iconName) { error in
             XCTAssertNil(error)
-            XCTAssertEqual(AppIcon.current, iconName)
+            XCTAssertEqual(currentIcon?.name, iconName)
+            XCTAssertEqual(currentIcon?.name, iconImageName)
         }
     }
     
@@ -55,9 +61,10 @@ class MockAppController: AppController {
     let mockSupportsAlternateIcons: Bool
     var mockAlternateIconName: String?
     
-    init(supportsAlternateIcons: Bool = true, alternateIconName: String? = "MockIconName") {
+    init(supportsAlternateIcons: Bool = true, alternateIconName: String? = "Default") {
         self.mockSupportsAlternateIcons = supportsAlternateIcons
         self.mockAlternateIconName = alternateIconName
+        
         super.init()
     }
     

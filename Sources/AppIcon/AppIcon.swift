@@ -10,7 +10,7 @@ import UIKit
 public struct AppIcon {
     internal static var application: AppController = AppController()
     internal static var bundle: Bundle = .main
-
+    
     public struct Icon {
         public let name: String
         public let imageName: String
@@ -20,8 +20,12 @@ public struct AppIcon {
         application.supportsAlternateIcons
     }
     
-    public static var current: String? {
-        application.alternateIconName
+    public static var current: Icon? {
+        guard let currentIconName = application.alternateIconName else {
+            return defined.first { $0.name == "Default" }
+        }
+        
+        return defined.first { $0.name == currentIconName }
     }
     
     public static var defined: [Icon] {
