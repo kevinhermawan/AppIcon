@@ -1,12 +1,18 @@
+## 1.0.3
+
+### Improved
+
+- refactor: moves `Icon` outside `AppIcon`
+
 ## 1.0.2
 
 ### Fixed
 
-- fix: current always return nil
+- fix: `current` always return `nil`
 
 ### Improved
 
-- refactor: changes application to directly use UIApplication.shared
+- refactor: changes `application` to directly use `UIApplication.shared`
 
 ## 1.0.1
 
