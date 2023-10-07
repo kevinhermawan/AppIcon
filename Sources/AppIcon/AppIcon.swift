@@ -26,7 +26,7 @@ public struct AppIcon {
             return defined.first { $0.isDefault }
         }
         
-        return defined.first { $0.name == currentIconName }
+        return defined.first { $0.imageName == currentIconName }
     }
     
     public static var defined: [Icon] {

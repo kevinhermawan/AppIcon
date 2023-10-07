@@ -65,7 +65,7 @@ class MockAppController: AppController {
     let mockSupportsAlternateIcons: Bool
     var mockAlternateIconName: String?
     
-    init(supportsAlternateIcons: Bool = true, alternateIconName: String? = "Default") {
+    init(supportsAlternateIcons: Bool = true, alternateIconName: String? = nil) {
         self.mockSupportsAlternateIcons = supportsAlternateIcons
         self.mockAlternateIconName = alternateIconName
         
