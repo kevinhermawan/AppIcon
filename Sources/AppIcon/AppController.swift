@@ -7,16 +7,20 @@
 
 import UIKit
 
-class AppController {
-    var supportsAlternateIcons: Bool {
-        UIApplication.shared.supportsAlternateIcons
-    }
+class AppController: AppControllerProtocol {
+    var supportsAlternateIcons: Bool { return true }
+    var alternateIconName: String? { return nil }
     
-    var alternateIconName: String? {
-        UIApplication.shared.alternateIconName
-    }
+    func setAlternateIconName(_ alternateIconName: String?, completionHandler: ((Error?) -> Void)?) {}
+}
+
+protocol AppControllerProtocol {
+    var supportsAlternateIcons: Bool { get }
+    var alternateIconName: String? { get }
     
-    func setAlternateIconName(_ alternateIconName: String?, completionHandler: ((Error?) -> Void)?) {
-        UIApplication.shared.setAlternateIconName(alternateIconName, completionHandler: completionHandler)
-    }
+    func setAlternateIconName(_ alternateIconName: String?, completionHandler: ((Error?) -> Void)?)
+}
+
+extension UIApplication: AppControllerProtocol {
+    
 }

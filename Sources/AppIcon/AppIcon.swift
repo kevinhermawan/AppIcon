@@ -8,7 +8,7 @@
 import UIKit
 
 public struct AppIcon {
-    internal static var application: AppController = AppController()
+    internal static var application: AppControllerProtocol = UIApplication.shared
     internal static var bundle: Bundle = .main
     
     public struct Icon {
