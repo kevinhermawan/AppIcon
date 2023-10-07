@@ -1,3 +1,13 @@
+## 1.0.2
+
+### Fixed
+
+- fix: current always return nil
+
+### Improved
+
+- refactor: changes application to directly use UIApplication.shared
+
 ## 1.0.1
 
 ### Added
