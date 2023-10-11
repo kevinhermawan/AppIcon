@@ -1,3 +1,9 @@
+## 2.0.2
+
+### Added
+
+- feat: adds iPad support
+
 ## 2.0.1
 
 ### Added
