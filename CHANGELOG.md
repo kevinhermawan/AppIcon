@@ -1,3 +1,9 @@
+## 2.0.3
+
+### Misc
+
+- Revert "feat: adds iPad support"
+
 ## 2.0.2
 
 ### Added
