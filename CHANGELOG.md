@@ -1,3 +1,7 @@
+## 2.0.5
+
+- feat: adds new method to get defined icon by `iconName`
+
 ## 2.0.4
 
 ### Added
