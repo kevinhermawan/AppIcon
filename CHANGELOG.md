@@ -1,3 +1,9 @@
+## 2.0.0
+
+### BREAKING CHANGES
+
+- refactor!: changes the `Icon` structure
+
 ## 1.0.3
 
 ### Improved
