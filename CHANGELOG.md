@@ -1,3 +1,13 @@
+## 2.0.1
+
+### Added
+
+- feat: make `Icon` conforms to `Identifiable`
+
+### Misc
+
+- doc: updates README.md
+
 ## 2.0.0
 
 ### BREAKING CHANGES
