@@ -8,13 +8,11 @@
 import Foundation
 
 public struct Icon: Codable {
-    public let key: String
     public let label: String
     public let iconName: String
     public let isDefault: Bool
     
-    public init(key: String, label: String, iconName: String, isDefault: Bool) {
-        self.key = key
+    public init(label: String, iconName: String, isDefault: Bool) {
         self.label = label
         self.iconName = iconName
         self.isDefault = isDefault
@@ -23,6 +21,6 @@ public struct Icon: Codable {
 
 extension Icon: Identifiable {
     public var id: String {
-        key
+        iconName
     }
 }

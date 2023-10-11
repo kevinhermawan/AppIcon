@@ -20,7 +20,7 @@ public struct AppIcon {
             return defined.first { $0.isDefault }
         }
         
-        return defined.first { $0.iconName == currentIconName }
+        return icon(for: currentIconName)
     }
     
     public static var defined: [Icon] {
@@ -33,7 +33,7 @@ public struct AppIcon {
         if let primaryIconDict = iconsDict["CFBundlePrimaryIcon"] as? [String: Any],
            let primaryIconFiles = primaryIconDict["CFBundleIconFiles"] as? [String],
            let primaryIconName = primaryIconFiles.first {
-            let icon = Icon(key: "Default", label: "Default", iconName: primaryIconName, isDefault: true)
+            let icon = Icon(label: "Default", iconName: primaryIconName, isDefault: true)
             
             icons.append(icon)
         }
@@ -44,7 +44,7 @@ public struct AppIcon {
                    let iconFiles = iconDict["CFBundleIconFiles"] as? [String],
                    let firstIconFile = iconFiles.first {
                     let label = generateLabel(from: key)
-                    let icon = Icon(key: key, label: label, iconName: firstIconFile, isDefault: false)
+                    let icon = Icon(label: label, iconName: firstIconFile, isDefault: false)
                     
                     icons.append(icon)
                 }
@@ -77,8 +77,14 @@ public struct AppIcon {
         }
     }
     
-    private static func generateLabel(from key: String) -> String {
-        key.replacingOccurrences(of: "AppIcon-", with: "").replacingOccurrences(of: "-", with: " ")
+    public static func icon(for iconName: String?) -> Icon? {
+        defined.first(where: { $0.iconName == iconName })
+    }
+    
+    private static func generateLabel(from iconName: String) -> String {
+        iconName
+            .replacingOccurrences(of: "AppIcon-", with: "")
+            .replacingOccurrences(of: "-", with: " ")
     }
     
     private static func createError(_ message: String) -> NSError {

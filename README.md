@@ -48,9 +48,18 @@ for icon in AppIcon.defined {
     print("\(icon.label) - \(icon.iconName)")
 }
 
+// Retrieving a specific icon by its iconName
+let iconName = "Alternate1"
+
+if let specificIcon = AppIcon.icon(for: iconName) {
+    print("Found icon: \(specificIcon.label) - \(specificIcon.iconName)")
+} else {
+    print("Icon not found for name \(iconName)")
+}
+
 // Setting an alternate app icon (for example, "Alternate1")
-if let icon = AppIcon.defined.first(where: { $0.iconName == "Alternate1" }) {
-    AppIcon.set(to: icon) { error in
+if let iconToSet = AppIcon.defined.first(where: { $0.iconName == "Alternate1" }) {
+    AppIcon.set(to: iconToSet) { error in
         if let error = error {
             print("Failed to set app icon: \(error.localizedDescription)")
         } else {

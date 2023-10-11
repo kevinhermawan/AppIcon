@@ -47,6 +47,14 @@ final class AppIconTests: XCTestCase {
         }
     }
     
+    func testIconForIconName() {
+        let iconName = "AppIcon-Alternate-Dark"
+        let retrievedIcon = AppIcon.icon(for: iconName)
+        
+        XCTAssertEqual(retrievedIcon?.iconName, iconName)
+        XCTAssertEqual(retrievedIcon?.label, "Alternate Dark")
+    }
+    
     func testUnsupportedIconSetting() {
         AppIcon.application = MockAppController(supportsAlternateIcons: false)
         
