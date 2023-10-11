@@ -8,13 +8,15 @@
 import Foundation
 
 public struct Icon {
-    public let name: String
-    public let imageName: String
+    public let key: String
+    public let label: String
+    public let iconName: String
     public let isDefault: Bool
     
-    public init(name: String, imageName: String, isDefault: Bool) {
-        self.name = name
-        self.imageName = imageName
+    public init(key: String, label: String, iconName: String, isDefault: Bool) {
+        self.key = key
+        self.label = label
+        self.iconName = iconName
         self.isDefault = isDefault
     }
 }

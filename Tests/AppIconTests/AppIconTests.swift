@@ -23,38 +23,38 @@ final class AppIconTests: XCTestCase {
     func testCurrentIcon() {
         let currentIcon = AppIcon.current
         
-        XCTAssertEqual(currentIcon?.name, "Default")
-        XCTAssertEqual(currentIcon?.imageName, "DefaultIcon")
+        XCTAssertEqual(currentIcon?.label, "Default")
+        XCTAssertEqual(currentIcon?.iconName, "DefaultIcon")
     }
     
     func testDefinedIcons() {
         let icons = AppIcon.defined
         
-        XCTAssertTrue(icons.contains { $0.name == "Default" && $0.imageName == "DefaultIcon" })
-        XCTAssertTrue(icons.contains { $0.name == "Alternate1" && $0.imageName == "AlternateIcon1" })
-        XCTAssertTrue(icons.contains { $0.name == "Alternate2" && $0.imageName == "AlternateIcon2" })
+        XCTAssertTrue(icons.contains { $0.label == "Default" && $0.iconName == "DefaultIcon" })
+        XCTAssertTrue(icons.contains { $0.label == "Alternate Dark" && $0.iconName == "AppIcon-Alternate-Dark" })
+        XCTAssertTrue(icons.contains { $0.label == "Alternate Light" && $0.iconName == "AppIcon-Alternate-Light" })
     }
     
     func testSetIcon() {
-        guard let iconToSet = AppIcon.defined.first(where: { $0.name == "Alternate1" }) else {
+        guard let icon = AppIcon.defined.first(where: { $0.iconName == "Alternate1" }) else {
             return
         }
         
-        AppIcon.set(icon: iconToSet) { error in
+        AppIcon.set(to: icon) { error in
             XCTAssertNil(error)
-            XCTAssertEqual(AppIcon.current?.name, iconToSet.name)
-            XCTAssertEqual(AppIcon.current?.imageName, iconToSet.imageName)
+            XCTAssertEqual(AppIcon.current?.label, icon.label)
+            XCTAssertEqual(AppIcon.current?.iconName, icon.iconName)
         }
     }
     
     func testUnsupportedIconSetting() {
         AppIcon.application = MockAppController(supportsAlternateIcons: false)
         
-        guard let iconToSet = AppIcon.defined.first(where: { $0.name == "Alternate1" }) else {
+        guard let icon = AppIcon.defined.first(where: { $0.iconName == "Alternate1" }) else {
             return
         }
         
-        AppIcon.set(icon: iconToSet) { error in
+        AppIcon.set(to: icon) { error in
             XCTAssertNotNil(error)
             XCTAssertEqual(error?.localizedDescription, "Alternate icons not supported")
         }
@@ -95,11 +95,11 @@ class MockBundle: Bundle {
                     "CFBundleIconFiles": ["DefaultIcon"]
                 ],
                 "CFBundleAlternateIcons": [
-                    "Alternate1": [
-                        "CFBundleIconFiles": ["AlternateIcon1"]
+                    "Alternate-Dark": [
+                        "CFBundleIconFiles": ["AppIcon-Alternate-Dark"]
                     ],
-                    "Alternate2": [
-                        "CFBundleIconFiles": ["AlternateIcon2"]
+                    "Alternate-Light": [
+                        "CFBundleIconFiles": ["AppIcon-Alternate-Light"]
                     ]
                 ]
             ]
