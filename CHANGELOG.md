@@ -1,3 +1,9 @@
+## 2.0.4
+
+### Added
+
+- feat: make `Icon` conforms to `Codable`
+
 ## 2.0.3
 
 ### Misc
