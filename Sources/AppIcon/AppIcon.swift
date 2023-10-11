@@ -26,9 +26,8 @@ public struct AppIcon {
     public static var defined: [Icon] {
         var icons: [Icon] = []
         
-        guard let iconsDict = bundle.infoDictionary?["CFBundleIcons"] as? [String: Any] else {
-            return icons
-        }
+        let iconKey: String = UIDevice.current.userInterfaceIdiom == .pad ? "CFBundleIcons~ipad" : "CFBundleIcons"
+        guard let iconsDict = bundle.infoDictionary?[iconKey] as? [String: Any] else { return icons }
         
         if let primaryIconDict = iconsDict["CFBundlePrimaryIcon"] as? [String: Any],
            let primaryIconFiles = primaryIconDict["CFBundleIconFiles"] as? [String],
@@ -78,7 +77,11 @@ public struct AppIcon {
     }
     
     private static func generateLabel(from key: String) -> String {
-        key.replacingOccurrences(of: "AppIcon-", with: "").replacingOccurrences(of: "-", with: " ")
+        key
+            .replacingOccurrences(of: "AppIcon-", with: "")
+            .replacingOccurrences(of: "-ipad", with: "")
+            .replacingOccurrences(of: "-pro", with: "")
+            .replacingOccurrences(of: "-", with: " ")
     }
     
     private static func createError(_ message: String) -> NSError {
